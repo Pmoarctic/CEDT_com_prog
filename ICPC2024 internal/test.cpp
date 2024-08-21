@@ -13,18 +13,16 @@ typedef vector<ull> vull;
 
 int main()
 {
-    ll n;
-    cin >>n;
-    vector<ll> v;
-    for(ll i=0;i<n;i++)
-    {
-        ll t;
-        cin >>t;
-        v.pb(t);
+    multiset<int> s;
+    int n=10;
+    while(n--)
+    {  
+        int x;
+        cin >> x;
+        s.insert(x);
     }
-    sort(all(v));
 
-    cout << v[n-1]*v[n-2];
+    cout << *s.lower_bound(3);
 }
 /*
 

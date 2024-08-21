@@ -13,18 +13,16 @@ typedef vector<ull> vull;
 
 int main()
 {
-    ll n;
-    cin >>n;
-    vector<ll> v;
-    for(ll i=0;i<n;i++)
+    ll t;
+    cin >> t;
+    while(t--)
     {
-        ll t;
-        cin >>t;
-        v.pb(t);
+        ll n,a;
+        cin >> n >> a;
+        cout << max( (n*n+n)/2 , n*a) << '\n';
     }
-    sort(all(v));
 
-    cout << v[n-1]*v[n-2];
+    return 0;
 }
 /*
 
