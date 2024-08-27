@@ -14,21 +14,21 @@ typedef vector<ull> vull;
 int n,m,h,q;
 int mx=0;
 multiset<int> net;
-vector<int> dis(2000000,0),res,res2(2000000,0);
+vector<pii> vec;
 
 
 int main()
 {
     ////
     cin >> n >> m >> h >> q;
+
     for(int i=0;i<n;i++)
     {
-        int x,y;
-        cin >> x >> y;
-        dis[x] = y;
-
-        mx = max(mx,x);
+        int a,b;
+        cin >> a >> b;
+        vec.pb({a,b});
     }
+    
     for(int i=0;i<m;i++)
     {
         int t;
@@ -37,47 +37,38 @@ int main()
     }
     //
 
+    vector<int> res;
     res.pb(0);
-    int cnt=0;
-    for(int i=1;i<=mx;i++)
+    for(int i=0;i<n;i++)
     {
-        if(dis[i]!=0)
+        int x = vec[i].first;
+        int y = vec[i].second;
+        int delta = abs(y-h);
+        if(net.lower_bound(delta) != net.end())
         {
-            int delta = abs(dis[i]-h);
-            if(net.lower_bound(delta) != net.end())
-            {
-                net.erase(net.lower_bound(delta));
-                cnt++;
-            }
+            net.erase(net.lower_bound(delta));
+            res.pb(x);
         }
-        res.pb(cnt);   
         if(net.empty())
         {
             break;
         }
     }
-
-    for(int i=1;i<=n;i++)
-    {
-        if(lower_bound(all(res),i) == res.end())
-        {
-            break;
-        }
-        res2[i] = (lower_bound(all(res),i)-res.begin());
-    }
+    
+    int mx = res.size();
     
     while(q--)
     {
         int k;
         cin >> k;
-        if(k > cnt)
+        if(k >= mx)
         {
             cout << "-1\n";
             continue;
         }
-        cout << res2[k] << "\n";
+        cout << res[k] << "\n";
     }
-
+    
     return 0;
 }
 /*
