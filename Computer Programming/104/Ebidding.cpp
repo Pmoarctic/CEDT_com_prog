@@ -1,4 +1,143 @@
-246
+#include<bits/stdc++.h>
+using namespace std;
+#define pb push_back
+#define ll long long
+#define all(x) x.begin(),x.end()
+
+map<string,set<string> > board;
+map<string,map<string,int> > bidder,order;
+
+struct PLAYER
+{
+    string name;
+    int price;
+    int idx;
+};
+
+bool sorting(PLAYER &a,PLAYER &b)
+{
+    if(a.price!=b.price)
+    {
+        return a.price>b.price;
+    }
+    else
+    {
+        return a.idx<b.idx;
+    }
+}
+
+set<string> name;
+
+int main()
+{
+    int n;
+    cin >> n;
+    for(int i=0;i<n;i++)
+    {
+        char cmd;
+        cin >> cmd;
+        if(cmd=='B')
+        {
+            string a,b;
+            ll p;
+            cin >> a >> b >> p;
+
+            name.insert(a);
+
+            if(board[b].find(a) == board[b].end())
+            {
+                board[b].insert(a);
+                bidder[b][a] = p;
+            }
+            else
+            {
+                bidder[b][a] = p;
+            }
+            order[b][a]=i;
+        }
+        else
+        {
+            string a,b;
+            cin >> a >> b;
+            if(board[b].find(a) != board[b].end())
+            {
+                //cout << "del\n";
+                board[b].erase(a);
+                bidder[b][a] = 0;
+            }
+        }
+    }
+
+    map<string,pair<int,vector<string> > > res;
+
+    for(auto i:name)
+    {
+        res[i].first=0;
+        vector<string> tt;
+        res[i].second=tt;
+    }
+
+    for(auto i:board)
+    {
+        vector<PLAYER> tmp;
+
+        for(auto j:i.second)
+        {
+            tmp.pb({j,bidder[i.first][j],order[i.first][j]});
+        }
+        sort(all(tmp),sorting);
+        if(tmp.empty())
+        {
+            continue;
+        }
+        res[tmp[0].name].first += tmp[0].price;
+        res[tmp[0].name].second.pb(i.first);
+    }
+
+    for(auto i:name)
+    {
+        if(res[i].first==0)
+        {
+            cout << i << ": $" << res[i].first << '\n';
+            continue;
+        }
+        else
+        {
+            cout << i << ": $" << res[i].first << " ->";
+            for(auto j:res[i].second)
+            {
+                cout << " " << j;
+            }
+            cout << '\n';
+        }
+        
+    }
+
+    
+    return 0;
+}
+/*
+16
+B abc01 xyz05 200
+B abc02 xyz04 400
+B abc01 xyz03 100
+B abc02 xyz02 500
+B abc01 xyz01 300
+W abc01 xyz03
+B abc09 xyz99 999
+B abc09 xyz98 999
+B abc09 xyz97 999
+B abc09 xyz96 999
+W abc09 xyz99
+B abc09 xyz95 999
+B abc17 xyz17 17
+B abc18 xyz18 18
+B abc19 xyz19 19
+W abc17 xyz17
+*/
+
+/*
+200
 B B16 P90 102
 B B19 P83 102
 B B19 P85 102
@@ -199,49 +338,4 @@ B B18 P93 103
 B B17 P81 102
 W B13 P92
 B B10 P81 100
-W B19 P86
-B B16 P85 101
-B B11 P82 102
-W B13 P84
-B B14 P85 102
-B B11 P88 101
-B B19 P83 103
-B B15 P89 102
-W B19 P93
-B B16 P91 103
-B B19 P91 101
-B B14 P81 101
-B B11 P94 101
-W B18 P89
-B B17 P94 103
-B B15 P91 101
-B B12 P85 101
-W B16 P94
-B B14 P89 102
-B B10 P85 101
-W B16 P87
-B B13 P80 103
-W B14 P85
-B B14 P92 102
-B B13 P92 102
-W B15 P91
-B B18 P88 102
-B B13 P90 100
-B B19 P91 103
-B B17 P93 103
-B B18 P81 103
-B B19 P91 103
-B B15 P90 101
-B B12 P89 103
-B B10 P81 101
-W B19 P86
-B B13 P85 102
-B B18 P84 103
-B B10 P81 102
-B B18 P82 101
-B B10 P93 103
-B B15 P94 100
-B B12 P94 100
-B B13 P87 101
-W B14 P91
-B B13 P80 100
+*/
