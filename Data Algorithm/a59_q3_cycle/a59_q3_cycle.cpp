@@ -63,3 +63,5 @@ int main()
 
     cout <<res;
 }
+
+// detect cycle using dfs

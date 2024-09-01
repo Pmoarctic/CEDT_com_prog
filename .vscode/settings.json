@@ -20,6 +20,7 @@
         "stacktrace": "cpp",
         "regex": "cpp",
         "valarray": "cpp",
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "any": "cpp"
     }
 }

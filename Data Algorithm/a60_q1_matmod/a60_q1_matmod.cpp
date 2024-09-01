@@ -71,3 +71,5 @@ int main()
 
     return 0;
 }
+
+//power matrix algorithm

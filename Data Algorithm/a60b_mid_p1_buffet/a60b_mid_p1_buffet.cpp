@@ -15,9 +15,35 @@ typedef priority_queue<pii, vector<pii> , greater<pii> > gpiiq;
 
 int main()
 {
+    int f,w,n;
+    cin >> f >> w >> n;
+    vector<int> table;
+    for(int i=0;i<f;i++)
+    {
+        int a;
+        cin >> a;
+        table.pb(a);
+    }
+    sort(all(table));
 
-
-
+    int res=0;
+    int mx=-1;
+    for(int i=0;i<table.size();i++)
+    {
+        if(table[i]<=mx)
+        {
+            continue;
+        }
+        else
+        {
+            cout << i+w << " ";
+            mx = i+(w*2 + 1);
+            res++;
+        }
+    }
+    cout << "\n" << res;
 
     return 0;
 }
+
+//greedy
