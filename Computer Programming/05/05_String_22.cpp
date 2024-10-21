@@ -49,7 +49,7 @@ int main()
         }
     }
 
-    cout << mxx << " " << mxy << '\n';
+    //cout << mxx << " " << mxy << '\n';
 
 
     if(mxx > mxy)
