@@ -13,9 +13,9 @@ typedef vector<ll> vll;
 typedef vector<ull> vull;
 typedef priority_queue<pii, vector<pii> , greater<pii> > gpiiq;
 
-vector<int> c,start,adj[10010];
+vector<int> c,start,adj[50010];
 
-vector<int> tim(10010,INT_MAX);
+vector<int> tim(50010,INT_MAX);
 void hack(int st)
 {
     priority_queue<pii, vector<pii> , greater<pii> > pq;// time,node;

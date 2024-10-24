@@ -24,6 +24,12 @@ int main()
         cin >> a;
         table.pb(a);
     }
+    if(w==0)
+    {
+        cout << table.size();
+        return 0;
+    }
+
     sort(all(table));
 
     int res=0;
@@ -36,12 +42,11 @@ int main()
         }
         else
         {
-            cout << i+w << " ";
-            mx = i+(w*2 + 1);
+            mx = table[i]+(w*2);
             res++;
         }
     }
-    cout << "\n" << res;
+    cout << res;
 
     return 0;
 }

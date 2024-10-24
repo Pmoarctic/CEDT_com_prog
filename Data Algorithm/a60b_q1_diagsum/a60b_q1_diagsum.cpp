@@ -17,27 +17,29 @@ int main()
 {
     int n;
     cin >> n;
-    vector<vi> arr(n+2,vi(n+2,0));
+    vi arr[n*2];
+    for(int i=1;i<n*2;i++)
+    {
+        arr[i].pb(0);
+    }
 
     for(int i=1;i<=n;i++)
     {
         for(int j=1;j<=n;j++)
         {
-            cin >> arr[i][j];
+            int t;
+            cin >> t;
+            t += arr[i-j+n][arr[i-j+n].size()-1];
+            arr[i-j+n].pb(t);
         }
     }
-
-    int res=-1;
-    for(int i=n;i>=1;i--)
+    for(int i=1;i<n*2;i++)
     {
-        for(int j=n;j>=1;j--)
+        for(auto j:arr[i])
         {
-            arr[i][j] += arr[i+1][j+1];
-            res = max(res,arr[i][j]);
+            cout << j << " ";
         }
+        cout << "\n";
     }
-
-    cout << res;
-    return 0;
 }
 // greedy algorithm

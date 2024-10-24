@@ -13,55 +13,11 @@ typedef vector<ll> vll;
 typedef vector<ull> vull;
 typedef priority_queue<pii, vector<pii> , greater<pii> > gpiiq;
 
-vector<int> adj[100010],vis(100010,0);
-unordered_map<int,int> mp;
-
-int res;
-
-void depthFirstSearch(int cur,int prev,int idx)
-{
-    if(vis[cur] == 1)
-    {
-        return;
-    }
-    else
-    {
-        vis[cur]=1;
-        mp[cur]=idx;
-        for(auto i:adj[cur])
-        {
-            if(i!=prev)
-            {
-                if(vis[i]==1)
-                {
-                    //cout << "\n" << mp[i] << " " << mp[cur] << "\n";
-                    res = mp[i]-mp[cur]+1;
-                    return;
-                }
-                depthFirstSearch(i,cur,idx+1);
-            }
-        }
-        return;
-    }
-
-}
-
 int main()
 {
-    int n;
-    cin >> n;
 
-    while(n--)
-    {
-        int a,b;
-        cin >> a >> b;
-        adj[a].pb(b);
-        adj[b].pb(a);
-    }
 
-    depthFirstSearch(0,-1,1);
 
-    cout <<res;
+
+    return 0;
 }
-
-// detect cycle using dfs
