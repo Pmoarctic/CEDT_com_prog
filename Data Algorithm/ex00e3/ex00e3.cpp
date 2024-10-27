@@ -15,7 +15,20 @@ typedef priority_queue<pii, vector<pii> , greater<pii> > gpiiq;
 
 int main()
 {
+    int n;
+    cin >> n;
+    vi a,s;
+    for(int i=1;i<=n;i++)
+    {
+        a.pb(i);
+        int t;
+        cin >> t;
+        s.pb(t);
+    }
+    sort(all(s));
 
+    if(a==s)cout << "YES";
+    else cout <<"NO";
 
 
 

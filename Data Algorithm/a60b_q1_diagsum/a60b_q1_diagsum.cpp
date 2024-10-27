@@ -33,13 +33,20 @@ int main()
             arr[i-j+n].pb(t);
         }
     }
+
+    int res = INT_MIN;
     for(int i=1;i<n*2;i++)
     {
-        for(auto j:arr[i])
+        int len = arr[i].size();
+        for(int j=1;j<len;j++)
         {
-            cout << j << " ";
+            for(int k=0;k<j;k++)
+            {
+                res = max(res,arr[i][j]-arr[i][k]);
+            }
         }
-        cout << "\n";
     }
+
+    cout << res;
 }
 // greedy algorithm

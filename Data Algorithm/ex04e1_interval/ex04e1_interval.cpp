@@ -15,9 +15,38 @@ typedef priority_queue<pii, vector<pii> , greater<pii> > gpiiq;
 
 int main()
 {
+    int n;
+    cin >> n;
+    vector<pii> v;
 
+    for(int i=0;i<n;i++)
+    {
+        int a;
+        cin >> a;
+        v.pb({0,a});
 
+    }
+    for(int i=0;i<n;i++)
+    {
+        int a;
+        cin >> a;
+        v[i].first = a;
+    }
+    sort(all(v));
 
-
+    int res = 0;
+    int cur_end = 0;
+    for(int i=0;i<n;i++)
+    {
+        //cout << v[i].first << " " << v[i].second << "\n";
+        if(cur_end <= v[i].second)
+        {
+            res++;
+            cur_end = v[i].first;
+            //cout << cur_end << "\n";
+        }
+        
+    }
+    cout << res;
     return 0;
 }

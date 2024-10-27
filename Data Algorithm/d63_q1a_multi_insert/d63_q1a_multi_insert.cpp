@@ -1,23 +1,24 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
-
-#define ll long long
-#define ull unsigned long long
-#define pb push_back
-#define sz(x) (int)(x).size()
-#define all(x) (x).begin(), (x).end()
-#define in(x) != x.end()
-typedef pair<int,int> pii;
-typedef vector<int> vi;
-typedef vector<ll> vll;
-typedef vector<ull> vull;
-typedef priority_queue<pii, vector<pii> , greater<pii> > gpiiq;
-
-int main()
-{
-
-
-
-
-    return 0;
+void multiple_add(vector<int> &v, int value, int position, int count) {
+    
+    vector<int> tmp;
+    while(count--)
+    {
+        tmp.push_back(value);
+    }
+    v.insert(v.begin()+position,tmp.begin(),tmp.end());
+}
+int main() {
+ std::ios_base::sync_with_stdio(false);
+ cin.tie(0);
+ int n,value,position,count;
+ cin >> n >> value >> position >> count;
+ vector<int> v(n);
+ for (int i = 0; i < n; i++) cin >> v[i];
+ multiple_add(v,value,position,count);
+ cout << "After call multiple_add" << endl << "Size = " << v.size() << endl;
+ for (auto &x : v) cout << x << " ";
+ cout << endl;
 }
