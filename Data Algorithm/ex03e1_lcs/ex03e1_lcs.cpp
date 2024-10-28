@@ -12,29 +12,31 @@ typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<ull> vull;
 typedef priority_queue<pii, vector<pii> , greater<pii> > gpiiq;
-#define MOD 100000007;
 
 int main()
 {
-    ll n;
-    cin >> n;
+    string S,Q;
+    cin >> S >> Q;
+    int n = S.size();
+    int m = Q.size();
 
-    ll a = 1;
-    ll b = 2;
+    vector<vi> dp(n+1,vi(m+1,0));
 
-    ll res = 3;
-
-    for(int i=2;i<=n;i++)
+    for(int i=1;i<=n;i++)
     {
-        ll new_a = a+b;
-        ll new_b = a*2 + b;
-        a = new_a%MOD;
-        b = new_b%MOD;
-        //res = a+b;
+        for(int j=1;j<=m;j++)
+        {
+            if(S[i-1]==Q[j-1])
+            {
+                dp[i][j] = dp[i-1][j-1]+1;
+            }
+            else
+            {
+                dp[i][j] = max(dp[i][j-1],dp[i-1][j]);
+            }
+        }
     }
-
-    //cout << a << " " << b << "\n";
-    cout << (a+b)%MOD;
+    cout << dp[n][m];
 
     return 0;
 }

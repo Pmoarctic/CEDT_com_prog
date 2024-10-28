@@ -12,29 +12,24 @@ typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<ull> vull;
 typedef priority_queue<pii, vector<pii> , greater<pii> > gpiiq;
-#define MOD 100000007;
+
+int C(int n,int k)
+{
+    if(n==k || k==0)
+    {
+        return 1;
+    }
+    else
+    {
+        return C(n-1,k-1)+C(n-1,k);
+    }
+}
 
 int main()
 {
-    ll n;
-    cin >> n;
+    int n,k;
+    cin >> n >> k;
 
-    ll a = 1;
-    ll b = 2;
-
-    ll res = 3;
-
-    for(int i=2;i<=n;i++)
-    {
-        ll new_a = a+b;
-        ll new_b = a*2 + b;
-        a = new_a%MOD;
-        b = new_b%MOD;
-        //res = a+b;
-    }
-
-    //cout << a << " " << b << "\n";
-    cout << (a+b)%MOD;
-
+    cout << C(n,k);
     return 0;
 }
