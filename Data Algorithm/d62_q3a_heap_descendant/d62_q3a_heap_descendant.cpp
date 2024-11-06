@@ -13,11 +13,28 @@ typedef vector<ll> vll;
 typedef vector<ull> vull;
 typedef priority_queue<pii, vector<pii> , greater<pii> > gpiiq;
 
+int res = 0;
+vi v;
+int n,a;
+void recur(int cur)
+{
+    if(cur >= n)return;
+    res++;
+    v.pb(cur);
+    recur(cur*2+1);
+    recur(cur*2+2);
+}
+
 int main()
 {
+    cin >> n >> a;
 
+    recur(a);
+    sort(all(v));
 
-
+    cout << res << "\n";
+    for(auto &i:v)
+        cout << i << " ";
 
     return 0;
 }

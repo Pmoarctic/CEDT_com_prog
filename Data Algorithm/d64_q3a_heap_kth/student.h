@@ -8,9 +8,14 @@
 template <typename T,typename Comp >
 T CP::priority_queue<T,Comp>::get_kth(size_t k) const {
   //write your code here
-  
+  std::vector<T> v;
+  for(size_t i=1;i<mSize+1 && i<(1<<k);i++)
+  {
+    v.push_back(mData[i-1]);
+  }
+  std::sort(v.begin(),v.end(),mLess);
+  return *(v.end()-k);
   //can include anything
-  return 0;
 }
 
 #endif
