@@ -14,7 +14,16 @@ int main() {
   ///std::vector<int> v = {10, 20, 30, 40, 50, 60, 70, 80};
   std::vector<int> v = {30, 70, 40, 20, 10, 80, 50, 60, 90, 100};
   //std::reverse(v.begin(),v.end());
-
+  // int n,val,dummy;
+  // std::cin >> n;
+  // std::vector<int> v(n);
+  //std::cin >> val >> dummy;
+  // for(auto &i:v)
+  // {
+  //   std::cin >> i;
+  // }
+  
+  int val = 70;
 
   // add value from v to m
   CP::map_bst<int,int> m1,m2;
@@ -22,7 +31,7 @@ int main() {
     m1[x] = -x;
   }
 
-  int val = 70;
+  
   printf("The \"original\"  tree\n");
   m1.print();
   m2 = m1.split(val);

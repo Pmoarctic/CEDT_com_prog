@@ -13,58 +13,58 @@ typedef vector<ll> vll;
 typedef vector<ull> vull;
 typedef priority_queue<pii, vector<pii> , greater<pii> > gpiiq;
 
+int n,m;
 
-
-int main()
+void recur(vector<int> &tmp, vector<vi> &res,vi &vis,vi &con)
 {
-    int n,m,src;
-    cin >> n >> m >> src;
-    
-    vector<vi> dis(n,vi(n,INT_MAX));
-    while(m--)
+    if(tmp.size()==n)
     {
-        int a,b,c;
-        cin >> a >> b >> c;
-        dis[a][b] = c;
+        res.pb(tmp);
     }
-
-    for(int k=0;k<n;k++)
+    else
     {
-        dis[k][k]=0;
         for(int i=0;i<n;i++)
         {
-            for(int j=0;j<n;j++)
+            if(vis[i]==0 && (con[i]==-1 || vis[con[i]]==1))
             {
-                
-                if(dis[i][j] > dis[i][k] + dis[k][j] && dis[i][k]!=INT_MAX && dis[k][j]!=INT_MAX)
-                {
-                    dis[i][j] = dis[i][k] + dis[k][j];
-                }
+                tmp.pb(i);
+                vis[i]=1;
+                recur(tmp,res,vis,con);
+                vis[i]=0;
+                tmp.pop_back();
             }
         }
     }
 
-    vi res;
-    bool fg=1;
-    for(int i=0;i<n;i++)
-    {
-        res.pb(dis[src][i]);
+}
 
-        if(dis[i][i]<0)
-        {
-            fg=0;
-            break;
-        }
+int main()
+{
+    
+    cin >> n >> m;
+
+    vi con(n,-1);
+
+    while(m--)
+    {
+        int a,b;
+        cin >> a >> b;
+        con[b] = a;
     }
 
-    if(fg==0)
-    {
-        cout << -1;
-        return 0;
-    }
+    vector<vi> res;
+    vi vis(n,0);
+    vi tmp;
+    recur(tmp,res,vis,con);
+
+    sort(all(res));
     for(auto i:res)
     {
-        cout << i << " ";
+        for(auto j:i)
+        {
+            cout << j << " ";
+        }
+        cout << '\n';
     }
 
     return 0;

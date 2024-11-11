@@ -10,51 +10,57 @@ CP::map_bst<KeyT,MappedT,CompareT> CP::map_bst<KeyT,MappedT,CompareT>::split(Key
   //your code here
   CP::map_bst<KeyT,MappedT,CompareT> result;
 
-  //search node
-  std::queue<node*> q,q2;
-  q.push(mRoot);
-  node* cur;
-  while(!q.empty())
-  {
-    cur = q.front();
-    q.pop();
+  node* cur = mRoot;
+  node* tmp;
+  node* prev;
 
-    
-    while(cur && cur->data.first < val)
+  while(cur)
+  {
+    if(cur->data.first < val)cur=cur->right;
+    else
     {
-      if (cur->right != NULL)
+      ////disjointing
+      tmp = cur->left;
+
+      if(cur==mRoot)
       {
-        cur = cur->right;
+        mRoot = tmp;
+        if(cur->left!=NULL)
+        {
+          cur->left = NULL;
+          tmp->parent = NULL;
+        }
       }
       else
       {
-        break;
+        child_link(cur->parent, cur->data.first) = tmp;
+        if(cur->left!=NULL)
+        {
+          
+          tmp->parent = cur->parent;
+          //cur->parent->right = tmp;
+          cur->left = NULL;
+        }
       }
-    }
+      /////
+      
+      /////connecting result tree
+      if(result.mRoot == NULL)
+      {
+        result.mRoot = cur;
+        cur->parent = NULL;
+      }
+      else
+      {
+        cur->parent = tmp;
+        prev->left = cur;
+      }
 
-    
-    if(cur!=NULL && cur->data.first >= val)result[cur->data.first] = cur->data.second;
-    if(cur->right!=NULL)q2.push(cur->right);
-    
-    if(cur->left != NULL)
-    {
-      q.push(cur->left);
-      cur->left->parent = cur->parent;
-      cur->parent->right = cur->left;
+      //check for next left node ,which maybe contain (data >= val)
+      prev = cur;
+      cur = tmp;
     }
   }
-
-  while(!q2.empty())
-  {
-    node* nw = q2.front();
-    std::cout << nw->data.first << "\n";
-    q2.pop();
-    result[nw->data.first] = nw->data.second;
-    if(nw->left!=NULL)q2.push(nw->left);
-    if(nw->right!=NULL)q2.push(nw->right);
-  }
-  
-
 
   return result;
 }
