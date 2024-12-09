@@ -46,7 +46,7 @@ int main()
                     if(i==j && R[i][i]>1)
                     {
                         fg=1;
-                        break;
+                        breeak;
                     }
                 }
                 if(fg)break;
