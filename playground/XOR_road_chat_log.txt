@@ -1,0 +1,143 @@
+MST XOR Graph
+user
+input int n
+next n number, input number which is data in node,which all of them connected and weight is A XOR B.
+
+find maximum span tree of this connected graph.
+
+solve in cpp
+ChatGPT
+To solve the problem of finding the **Maximum Spanning Tree (MST)** of a connected graph in C++, where the weight of an edge is given by \( A \oplus B \) (XOR operation), we can follow these steps:
+
+### Plan
+
+1. **Input**:
+   - Number of nodes (\( n \)).
+   - The node data (\( n \) integers).
+
+2. **Graph Construction**:
+   - For all pairs of nodes \( (i, j) \), compute the edge weight as \( \text{data}[i] \oplus \text{data}[j] \).
+   - Store these edges in a list along with their weights.
+
+3. **Maximum Spanning Tree**:
+   - Use Kruskal's algorithm (or Prim's algorithm) for finding the Maximum Spanning Tree.
+   - Sort edges in descending order of weight (instead of ascending as in the Minimum Spanning Tree).
+   - Use a Union-Find (Disjoint Set Union) structure to efficiently detect cycles.
+
+4. **Output**:
+   - The sum of the weights of the edges in the Maximum Spanning Tree.
+
+Here’s the implementation in C++:
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// Disjoint Set Union (DSU) for Kruskal's algorithm
+class DSU {
+    vector<int> parent, rank;
+public:
+    DSU(int n) {
+        parent.resize(n);
+        rank.resize(n, 0);
+        for (int i = 0; i < n; i++) parent[i] = i;
+    }
+
+    int find(int x) {
+        if (x != parent[x])
+            parent[x] = find(parent[x]);
+        return parent[x];
+    }
+
+    bool unite(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+        if (rootX == rootY) return false;
+        if (rank[rootX] > rank[rootY]) {
+            parent[rootY] = rootX;
+        } else if (rank[rootX] < rank[rootY]) {
+            parent[rootX] = rootY;
+        } else {
+            parent[rootY] = rootX;
+            rank[rootX]++;
+        }
+        return true;
+    }
+};
+
+int main() {
+    int n;
+    cin >> n;
+    vector<int> data(n);
+    for (int i = 0; i < n; i++) {
+        cin >> data[i];
+    }
+
+    vector<tuple<int, int, int>> edges; // {weight, node1, node2}
+
+    // Construct graph: calculate weights for all pairs of nodes
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            int weight = data[i] ^ data[j];
+            edges.push_back({weight, i, j});
+        }
+    }
+
+    // Sort edges by weight in descending order
+    sort(edges.rbegin(), edges.rend());
+
+    // Kruskal's algorithm for Maximum Spanning Tree
+    DSU dsu(n);
+    long long maxSpanTreeWeight = 0;
+    for (auto &[weight, u, v] : edges) {
+        if (dsu.unite(u, v)) {
+            maxSpanTreeWeight += weight;
+        }
+    }
+
+    cout << maxSpanTreeWeight << endl;
+    return 0;
+}
+```
+
+### Explanation
+
+1. **Input Handling**:
+   - Read \( n \) and the data of the nodes.
+
+2. **Graph Construction**:
+   - Generate all \( \binom{n}{2} \) edges with weights \( A[i] \oplus A[j] \).
+
+3. **Sorting**:
+   - Sort edges by weight in descending order to ensure that we pick the maximum weights first for the MST.
+
+4. **Kruskal's Algorithm**:
+   - Use a Disjoint Set Union (DSU) to connect nodes while avoiding cycles.
+
+5. **Output**:
+   - Print the total weight of the Maximum Spanning Tree.
+
+### Complexity
+
+- **Graph Construction**: \( O(n^2) \) for generating all pairs.
+- **Sorting**: \( O(E \log E) \), where \( E = n(n-1)/2 \).
+- **Kruskal's Algorithm**: \( O(E \alpha(n)) \), where \( \alpha \) is the inverse Ackermann function.
+
+Overall: \( O(n^2 + E \log E) \).
+
+### Example Input/Output
+
+#### Input
+```
+4
+1 2 3 4
+```
+
+#### Output
+```
+14
+```
+
+This approach ensures correctness and efficiency for dense graphs, as required for XOR-based weights.
